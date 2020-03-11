@@ -1,50 +1,61 @@
-/*
-two sum:
-
-Given an array of integers, return indices of the two numbers such that they add up to a specific target.
-You may assume that each input would have exactly one solution, and you may not use the same element twice.
-
-Example:
-Given nums = [2, 7, 11, 15], target = 9,
-Because nums[0] + nums[1] = 2 + 7 = 9,
-return [0, 1].
-*/
+// given a sorted array A(sorted in ascending order),having N integers,
+// find if there exits any pair of elements (A[i],A[j]) such that their sum is equal to XMLDocument
 
 
 
-//我的解法: 在一个array里面找。逻辑比较难懂。
+// input:A=[2,3,4,5,6,7,8,9] ,k=10
+// output: true
 
-let twoSum = function(nums, target) {
-    for(i=0;i<nums.length;i++){
-        let next=target-nums[i];
-        if(nums.slice(i+1,nums.length).includes(next)){
-            //nums.indexOf("s",1) 从index1开始找s ，包含index1.
-            return [nums.indexOf(nums[i]),nums.indexOf(next,i+1)];
-        }
+//sorted in ascending order  means fisrt one is minimum element and last is maximum value.
+// A=[2,3,4,5,6,7,8,9]
+//    ^             ^
+
+const arr=[2,3,4,5,7,8,9];
+const k =15;
+
+function findPairs(arr,k){
+
+    //定义两个点 pointer
+    let start=0;
+    let end=arr.length-1;
+    while(start<end){
+       if(arr[start]+arr[end]<k){
+           start++;
+       }else if(arr[start]+arr[end]===k){
+           return true;
+       }else{
+           //当 arr[start]+arr[end]>k 的时候移动end
+            end--;
+       }
     }
-};
-
-nums=[3,3];
-target=6;
-console.log(twoSum(nums,target));
-
-
-//别人的写法:一个object加， 一个数组减。根据let next=target-nums[i] 将数组跟object联系在一起。
-// 把查看过的结果放进一个object。将两个数据前后分离。
-
-let twoSum=function(nums,target){
-    let map={};
-    for(i=0;i<nums.length;i++){
-        let diff=target-nums[i];
-        if(map.hasOwnProperty(diff)){
-            return [map[diff],i];
-        }
-        map[nums[i]]=i;
-    }
-    return null;
+    return false;
 }
 
+console.log(findPairs(arr,k));
 
-nums=[3,3];
-target=6;
-console.log(twoSum(nums,target));
+
+
+//找出所有等于11的组合 
+const arr=[2,3,4,5,6,7,8,9];
+const k =11;
+
+function findPairs(arr,k){
+
+    //定义两个点 pointer
+    let start=0;
+    let end=arr.length-1;
+    let map=[];
+    while(start<end){
+       if(arr[start]+arr[end]<k){
+           start++;
+       }else if(arr[start]+arr[end]===k){
+           map.push([start,end]);
+           start++;
+           end--;
+       }else{
+           //当 arr[start]+arr[end]>k 的时候移动end
+            end--;
+       }
+    }
+    return map;
+}
